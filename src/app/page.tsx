@@ -1,12 +1,12 @@
 "use client";
 
-import { GetTodoListQuery, Todo, useGetTodoListQuery } from "@/graphql/generated";
+import { GetIndexListQuery, Index, useGetIndexListQuery } from "@/graphql/generated";
 import { gql, useLazyQuery, useMutation, useQuery } from "@apollo/client";
 import { useState } from "react";
 
-const GET_TODO = gql`
+const GET_Index = gql`
   query Query($id: ID) {
-    getTodo(id: $id) {
+    getIndex(id: $id) {
       id
       title
       completed
@@ -14,9 +14,9 @@ const GET_TODO = gql`
   }
 `;
 
-const CREATE_TODO = gql`
-  mutation Mutation($input: TodoCreateInput!) {
-    createTodo(input: $input) {
+const CREATE_Index = gql`
+  mutation Mutation($input: IndexCreateInput!) {
+    createIndex(input: $input) {
       id
       title
       completed
@@ -27,19 +27,19 @@ const CREATE_TODO = gql`
 export default function Home() {
   const [title, setTitle] = useState("");
 
-  const { data, loading, error } = useGetTodoListQuery();
-  const [createTodo, { data: createdData, loading: createLoading, error: createError }] = useMutation(CREATE_TODO);
-  const [getTodo, { data: getTodoData, loading: getTodoLoading, error: getTodoError }] = useLazyQuery(GET_TODO);
+  const { data, loading, error } = useGetIndexListQuery();
+  const [createIndex, { data: createdData, loading: createLoading, error: createError }] = useMutation(CREATE_Index);
+  const [getIndex, { data: getIndexData, loading: getIndexLoading, error: getIndexError }] = useLazyQuery(GET_Index);
 
-  console.log({ getTodoData, getTodoLoading, getTodoError });
+  console.log({ getIndexData, getIndexLoading, getIndexError });
 
   if (loading) return <>Loading...</>;
   if (error) return <>{error.message}...</>;
-  const { getTodoList } = data as GetTodoListQuery;
+  const { getIndexList } = data as GetIndexListQuery;
 
   const handleSubmit = (e: any) => {
     e.preventDefault();
-    createTodo({
+    createIndex({
       variables: {
         input: {
           title,
@@ -50,7 +50,7 @@ export default function Home() {
   };
 
   const handleItemClick = (id: string) => {
-    getTodo({
+    getIndex({
       variables: {
         id,
       },
@@ -59,11 +59,11 @@ export default function Home() {
 
   return (
     <div>
-      <h1>{getTodoData?.getTodo && <>{getTodoData.getTodo.title}</>}</h1>
+      <h1>{getIndexData?.getIndex && <>{getIndexData.getIndex.title}</>}</h1>
       <ul className="list-disc pl-5 mb-5">
-        {getTodoList?.map((todo: Todo) => (
-          <li key={todo.id} className="cursor-pointer hover:underline" onClick={() => handleItemClick(todo.id)}>
-            {todo.id}
+        {getIndexList?.map((Index: Index) => (
+          <li key={Index.id} className="cursor-pointer hover:underline" onClick={() => handleItemClick(Index.id)}>
+            {Index.id}
           </li>
         ))}
       </ul>

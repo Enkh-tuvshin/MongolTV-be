@@ -1,5 +1,5 @@
-import { todoQueries } from "./todo-queries";
+import { IndexQueries } from "./index-queries";
 
 export const Query = {
-  ...todoQueries,
+  ...IndexQueries,
 };

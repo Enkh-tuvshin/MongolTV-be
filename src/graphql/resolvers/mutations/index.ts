@@ -1,5 +1,5 @@
-import { todoMutations } from "./todo-mutations";
+import { indexMutations } from "./index-mutations";
 
 export const Mutation = {
-  ...todoMutations,
+  ...indexMutations,
 };

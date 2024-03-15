@@ -1,34 +1,29 @@
-fragment TodoFields on Todo {
+fragment IndexFields on Index {
   id
   title
   completed
 }
-query GetTodoList {
-  getTodoList {
-    ...TodoFields
+
+query GetAllIndex($getIndexId: ID) {
+  getIndex(id: $getIndexId) {
+    ...IndexFields
   }
 }
 
-query GetTodo($getTodoId: ID) {
-  getTodo(id: $getTodoId) {
-    ...TodoFields
+mutation CreateIndex($input: IndexCreateInput!) {
+  createIndex(input: $input) {
+    ...IndexFields
   }
 }
 
-mutation CreateTodo($input: TodoCreateInput!) {
-  createTodo(input: $input) {
-    ...TodoFields
+mutation DeleteIndex($id: ID!) {
+  deleteIndex(id: $id) {
+    ...IndexFields
   }
 }
 
-mutation DeleteTodo($id: ID!) {
-  deleteTodo(id: $id) {
-    ...TodoFields
-  }
-}
-
-mutation UpdateTodo($input: TodoUpdateInput!) {
-  updateTodo(input: $input) {
+mutation UpdateIndex($input: IndexUpdateInput!) {
+  updateIndex(input: $input) {
     id
     title
     completed
